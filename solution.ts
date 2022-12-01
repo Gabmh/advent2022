@@ -3,31 +3,34 @@ const fs = require('fs')
 const JSONStream = require('JSONStream')
 
 const main = () => {
-    const [ path, id ] = process.argv.slice(2)
-    let found = false
+    const [ path ] = process.argv.slice(2)
     
     // wrong params handling
-    if (!path || !id) {
-        console.log(`Please give all params: node --max_old_space_size=50 solution.ts [PATH] [ID]\nMissing: ${!path ? '[PATH]' : ''}${(!path && !id) ? ' & ' : ''}${!id ? '[ID]' : ''}`)
+    if (!path) {
+        console.log(`Please give all params: node [--max_old_space_size=50] solution.ts [PATH]`)
         return 0
     } else {
         console.log('...loading')
     }
 
     // reading file by package
-    const stream = fs.createReadStream(path, { encoding: 'utf8', flag: 'r' })
+    const raw = fs.readFileSync(path, { encoding: 'utf8' })
+    const list = raw.split(/\r?\n/)
 
-    // parsing text stream to json
-    stream.pipe(JSONStream.parse('*')).on('data', data => {
-        // output the right answer
-        if (data.id.toString() === id) {
-            console.log(data.name)
-            found = true
+    let result = []
+    let count = 0
+    list.forEach(element => {
+        const item = parseInt(element)
+        if (Number.isInteger(item)) {
+            count += item
+        } else {
+            result.push(count)
+            count = 0
         }
-    });
+    })
 
-    // no result
-    stream.on('end', () => !found ? console.log('not found') : '')    
+    // printing result
+    console.log('result = ', result.sort((one, two) => (one > two ? -1 : 1)).slice(0, 3).reduce((a, b) => a+b)) 
 }
 
 main()
