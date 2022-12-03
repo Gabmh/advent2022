@@ -1,21 +1,17 @@
-## The problem
+## Basic node template for advent of code
 
-The problem consists in extracting data from a JSON file too big to be parsed / hold in memory as a whole.
+To run a solution use this command: `npm test`
 
-The file is a valid JSON file, consisting in an array of objects. The structure of objects is not known, apart from the fact that they have an `id` and a `name` attributes.
+Links to solutions:
+ - Advent of code 2022
+   - [Day 1](https://github.com/Gabmh/advent2022/blob/advent2022-day-1/solution.ts)
+   - [Day 2](https://github.com/Gabmh/advent2022/blob/advent2022-day-2/solution.ts)
+   - [Day 3](https://github.com/Gabmh/advent2022/blob/advent2022-day-3/solution.ts)
 
-The formatting of the file is not known: it may be a single line file, or formatted using a variety of whitespace options.
+## Step to create a new solution
 
-The problem consists in writing a Node.js program which must:
+Create a branch `[YourName]/advent[Year]-day-[Number]` from `main`
 
-- accept an `id` as a command-line argument
-- log to the console the `name` attribute of the object with the corresponding id.
+For each part solution create a commmit `feat: part 1 solution`
 
-To simulate low memory constraints, your program should work with `node --max_old_space_size=50`
-
-## Example
-
-````
-> node --max_old_space_size=50 solution.js 62359
-Damon Jerde // logged to the console
-`````
+Finally push your branch and create a `Pull Request`
