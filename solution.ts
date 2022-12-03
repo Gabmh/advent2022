@@ -3,36 +3,45 @@ const fs = require('fs')
 const JSONStream = require('JSONStream')
 
 const main = () => {
-    // reading file by package
+    // Reading file by package
     const raw = fs.readFileSync('input.txt', { encoding: 'utf8' })
     const list = raw.split(/\r?\n/)
     list.pop()
 
-    let result = 0
-    list.forEach(element => {
-        // Split a string into two equivalent
-        const middle = element.length / 2 
-        let s1 = element.substring(0, middle);
-        let s2 = element.substring(middle);
-        console.log(`${s1}, ${s2}`)
-        console.log(`${s1.length}, ${s2.length}`)
+    const getGroupValue = (group) => {
+        // Get the 3 values of the group
+        const [first, second, third] = group
 
-        // Convert both string into array to find a common character
-        const common = s1.split('').filter(char => s2.split('').includes(char))[0]
-        console.log('common = ', common)
+        // Convert first 2 strings into array to find common characters
+        // Then compare to the last to find the common character
+        const common = first.split('').filter(char => second.split('').includes(char)).filter(char => third.split('').includes(char))[0]
         
         // Find the value of this character
         // Char code of lowercase a is 97
         // Char code of uppercase A is 65
-        console.log('is lowercase', common === common.toLowerCase())
         const value = common === common.toLowerCase() ? common.charCodeAt(0) - 96 : common.charCodeAt(0) - 38
-        console.log('value = ', value)
+        console.log(common, value)
 
-        // Add to the final result
-        result += value
-    })
+        // Return the value
+        return value
+    }
 
-    // printing result
+    let result = 0
+    let group = []
+    list.forEach(value => {
+        // Add actual value to actual group
+        group.push(value)
+
+        // We have a group of 3
+        if (group.length > 2) {
+            result += getGroupValue(group)
+
+            // Reinit group stacker
+            group = []
+        }
+    }, [])
+
+    // Printing result
     console.log('result = ', result) 
 }
 
