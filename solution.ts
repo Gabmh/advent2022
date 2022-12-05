@@ -23,14 +23,25 @@ const main = () => {
         ]
         
         list.forEach((line, index) => {
+            // Getting movements
             const [txt1, moves, txt2, origin, txt3, direction] = line.split(' ').map(str => parseInt(str))
-            let count = moves
-            while (count > 0) {
+            // --- Part 1 ---
+            // let count = moves
+            // while (count > 0) {
+            //     const removed = matrix[origin -1].pop()
+            //     matrix[direction - 1].push(removed)
+            //     count--
+            // }
+            // --- Part 2 ---
+            if (moves === 1) {
                 const removed = matrix[origin -1].pop()
                 matrix[direction - 1].push(removed)
-                count--
+            } else {
+                const removed = matrix[origin -1].splice(matrix[origin -1].length - moves, moves)
+                matrix[direction - 1] = matrix[direction - 1].concat(removed)
             }
-            if (index) {
+            // Test 3 first moves
+            if (index < 3) {
                 console.log(line)
                 console.log(matrix)
             }
