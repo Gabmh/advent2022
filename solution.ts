@@ -9,10 +9,10 @@ const main = () => {
         const raw = fs.readFileSync('input.txt', { encoding: 'utf8' })
     
         // Write your solution here
-        let index = 4
+        let index = 14
         while (index < raw.length) {
-            const test = raw.substring(index - 4, index)
-            if (index < 10) console.log(index, test)
+            const test = raw.substring(index - 14, index)
+            if (index < 24) console.log(index, test)
             if (!hasRepeats(test)) break
             index++
         }
